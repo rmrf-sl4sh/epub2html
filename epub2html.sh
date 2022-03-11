@@ -47,9 +47,9 @@ mkdir ./old
 #-- Define the function "convert" for converting .epubs to .htmlz archives
 convert () {
   #-- Define variable $fout as the current filename in variable $f, and cut the leading directory name off of it
-  fout=$(echo "$f" | cut -f 1 -d '.')
+  fout=$(basename "$f" .epub)
   #-- Run calibre (ebook-convert) on current file and process with the options listed
-  ebook-convert "$f" "$fout.htmlz" --pretty-print --margin-left=200 --margin-right=200 --change-justification=justify --smarten-punctuation --base-font-size=14
+  ebook-convert $f $fout.htmlz --pretty-print --margin-left=200 --margin-right=200 --change-justification=justify --smarten-punctuation --base-font-size=14
   #-- Define variable $farch as the basename of the file in variable $f
   farch=$(basename "$f")
   #-- Move processed file to the ./old directory
@@ -69,12 +69,13 @@ do
   #-- If you have a system that cannot handle converting many files in parallel, increase the sleep amount below:
   sleep 1
 done
-
+wait
+echo "[:] All conversions completed, unzipping .htmlz files..."
 #-- Begin the for loop and assign each *.htmlz archive name to the variable $file
 for f in *.htmlz;
 do
   #-- Extract each .htmlz archive to a subfolder named after the archive
-  unzip $file -d $(echo $file | cut -d . -f 1)
+  unzip $f -d $(basename "$f" .htmlz)
 #-- Script complete.
 done
 echo "[:] Complete."
