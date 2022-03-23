@@ -44,7 +44,7 @@ echo "[:] Beginning conversion of .epub files..."
 #-- Create directory 'old' in the current working directory (this is where processed .epub files will be moved to)
 mkdir ./old
 
-#-- Define the function "max5" to limit the number of concurrent conversion jobs to 5
+#-- Define the function "max" to limit the number of concurrent conversion jobs to 5
 function max {
    while [ `jobs | wc -l` -ge 5 ]
    do
@@ -75,7 +75,6 @@ do
   #-- This calls the convert function, and sends the process to the background. It will start a new process every 1 second until it works its way through all .epub files.
   max; convert &
   #-- If you have a system that cannot handle converting many files in parallel, increase the sleep amount below:
-  sleep 1
 done
 wait
 echo "[:] All conversions completed, unzipping .htmlz files..."
