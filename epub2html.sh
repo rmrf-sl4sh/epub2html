@@ -72,9 +72,8 @@ for f in *.epub;
 do
   #-- Use the convert() function defined earlier
   echo ""
-  #-- This calls the convert function, and sends the process to the background. It will start a new process every 1 second until it works its way through all .epub files.
+  #-- This calls the convert function, and sends the process to the background. It will start a new process until it works its way through all .epub files.
   max; convert &
-  #-- If you have a system that cannot handle converting many files in parallel, increase the sleep amount below:
 done
 wait
 echo "[:] All conversions completed, unzipping .htmlz files..."
